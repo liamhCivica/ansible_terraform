@@ -1,0 +1,9 @@
+all:
+  children:
+    vm1:
+      hosts:
+        172.31.35.223:
+      vars:
+        ansible_user: ubuntu
+        ansible_host_key_checking: false
+        ansible_ssh_private_key_file: ~/.ssh/ansible_id_rsa

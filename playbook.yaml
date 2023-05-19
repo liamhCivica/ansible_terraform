@@ -1,0 +1,29 @@
+- hosts: all
+  tasks:
+  - name: "install nginx"
+    become: yes
+    register: nginx
+    package:
+      name: nginx
+      update_cache: true
+      state: present
+
+  - name: Replace default html a
+    when: ansible_host == "vm1"
+    become: yes
+    copy:
+      src: ./a/index.nginx-debian.html
+      remote_src: no
+      dest: /var/www/html/
+
+  - name: Replace default html b
+    when: ansible_host == "vm2"
+    become: yes
+    copy:
+      src: ./b/index.nginx-debian.html
+      remote_src: no
+      dest: /var/www/html/
+
+  - name: "restart nginx"
+    become: yes
+    shell: service nginx restart
